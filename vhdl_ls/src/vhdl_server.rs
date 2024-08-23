@@ -151,7 +151,7 @@ impl VHDLServer {
     /// Extract path of workspace root configuration file from InitializeParams
     fn root_uri_config_file(&self, params: &InitializeParams) -> Option<PathBuf> {
         #[allow(deprecated)]
-        if is_vscode {
+        if self.settings.is_vscode {
             match params.root_uri.clone() {
                 Some(root_uri) => root_uri
                     .to_file_path()
