@@ -18,6 +18,9 @@ struct Args {
     /// This will silence all window/showMessage and only use window/logMessage
     #[arg(long, default_value_t = false)]
     silent: bool,
+
+    #[arg(long, default_value_t = false)]
+    is_vscode: bool,
 }
 
 fn main() {
@@ -28,6 +31,7 @@ fn main() {
     vhdl_ls::start(VHDLServerSettings {
         no_lint: args.no_lint,
         silent: args.silent,
+        is_vscode: args.is_vscode
         ..Default::default()
     });
 }
