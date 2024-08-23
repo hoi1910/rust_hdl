@@ -151,49 +151,69 @@ impl VHDLServer {
     /// Extract path of workspace root configuration file from InitializeParams
     fn root_uri_config_file(&self, params: &InitializeParams) -> Option<PathBuf> {
         #[allow(deprecated)]
-        if self.settings.is_vscode {
-            match params.root_uri.clone() {
-                Some(root_uri) => root_uri
-                    .to_file_path()
-                    .map(|root_path| root_path.join(".vscode").join("vhdl_ls.toml"))
-                    .map_err(|_| {
-                        self.message(Message::error(format!(
-                            "{} {} {:?} ",
-                            "Cannot load workspace:",
-                            "initializeParams.rootUri is not a valid file path:",
-                            root_uri,
-                        )))
-                    })
-                    .ok(),
-                None => {
-                    self.message(Message::error(
-                        "Cannot load workspace: Initialize request is missing rootUri parameter.",
-                    ));
-                    None
-                }
-            }
-        } else {
-            match params.root_uri.clone() {
-                Some(root_uri) => root_uri
-                    .to_file_path()
-                    .map(|root_path| root_path.join("vhdl_ls.toml"))
-                    .map_err(|_| {
-                        self.message(Message::error(format!(
-                            "{} {} {:?} ",
-                            "Cannot load workspace:",
-                            "initializeParams.rootUri is not a valid file path:",
-                            root_uri,
-                        )))
-                    })
-                    .ok(),
-                None => {
-                    self.message(Message::error(
-                        "Cannot load workspace: Initialize request is missing rootUri parameter.",
-                    ));
-                    None
-                }
+        match params.root_uri.clone() {
+            Some(root_uri) => root_uri
+                .to_file_path()
+                .map(|root_path| root_path.join(".vscode").join("vhdl_ls.toml"))
+                .map_err(|_| {
+                    self.message(Message::error(format!(
+                        "{} {} {:?} ",
+                        "Cannot load workspace:",
+                        "initializeParams.rootUri is not a valid file path:",
+                        root_uri,
+                    )))
+                })
+                .ok(),
+            None => {
+                self.message(Message::error(
+                    "Cannot load workspace: Initialize request is missing rootUri parameter.",
+                ));
+                None
             }
         }
+        // if self.settings.is_vscode {
+        //     match params.root_uri.clone() {
+        //         Some(root_uri) => root_uri
+        //             .to_file_path()
+        //             .map(|root_path| root_path.join(".vscode").join("vhdl_ls.toml"))
+        //             .map_err(|_| {
+        //                 self.message(Message::error(format!(
+        //                     "{} {} {:?} ",
+        //                     "Cannot load workspace:",
+        //                     "initializeParams.rootUri is not a valid file path:",
+        //                     root_uri,
+        //                 )))
+        //             })
+        //             .ok(),
+        //         None => {
+        //             self.message(Message::error(
+        //                 "Cannot load workspace: Initialize request is missing rootUri parameter.",
+        //             ));
+        //             None
+        //         }
+        //     }
+        // } else {
+        //     match params.root_uri.clone() {
+        //         Some(root_uri) => root_uri
+        //             .to_file_path()
+        //             .map(|root_path| root_path.join("vhdl_ls.toml"))
+        //             .map_err(|_| {
+        //                 self.message(Message::error(format!(
+        //                     "{} {} {:?} ",
+        //                     "Cannot load workspace:",
+        //                     "initializeParams.rootUri is not a valid file path:",
+        //                     root_uri,
+        //                 )))
+        //             })
+        //             .ok(),
+        //         None => {
+        //             self.message(Message::error(
+        //                 "Cannot load workspace: Initialize request is missing rootUri parameter.",
+        //             ));
+        //             None
+        //         }
+        //     }
+        // }
     }
 
     fn client_supports_related_information(&self) -> bool {
