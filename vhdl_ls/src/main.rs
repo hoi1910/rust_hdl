@@ -31,7 +31,7 @@ fn main() {
     vhdl_ls::start(VHDLServerSettings {
         no_lint: args.no_lint,
         silent: args.silent,
-        is_vscode: args.is_vscode
+        is_vscode: args.is_vscode,
         ..Default::default()
     });
 }
